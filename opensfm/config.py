@@ -7,7 +7,7 @@ use_exif_size: yes
 default_focal_prior: 0.85
 
 # Params for features
-feature_type: HAHOG           # Feature type (AKAZE, SURF, SIFT)
+feature_type: HAHOG           # Feature type (AKAZE, SURF, SIFT, HAHOG, ORB)
 feature_root: 1               # If 1, apply square root mapping to features
 feature_min_frames: 4000      # If fewer frames are detected, sift_peak_threshold/surf_hessian_threshold is reduced.
 feature_process_size: 2048    # Resize the image if its size is larger than specified. Set to -1 for original size
@@ -21,17 +21,21 @@ sift_edge_threshold: 10       # See OpenCV doc
 surf_hessian_threshold: 3000  # Smaller value -> more features
 surf_n_octaves: 4             # See OpenCV doc
 surf_n_octavelayers: 2        # See OpenCV doc
+surf_upright: 0               # See OpenCV doc
 
 # Params for AKAZE (See detials in lib/src/third_party/akaze/AKAZEConfig.h)
-akaze_omax: 4                 # Maximum octave evolution of the image 2^sigma (coarsest scale sigma units)
-akaze_dthreshold: 0.001       # Detector response threshold to accept point
-akaze_descriptor: MSURF       # Feature type
-akaze_descriptor_size: 0      # Size of the descriptor in bits. 0->Full size
-akaze_descriptor_channels: 3  # Number of feature channels (1,2,3)
+akaze_omax: 4                      # Maximum octave evolution of the image 2^sigma (coarsest scale sigma units)
+akaze_dthreshold: 0.001            # Detector response threshold to accept point
+akaze_descriptor: MSURF            # Feature type
+akaze_descriptor_size: 0           # Size of the descriptor in bits. 0->Full size
+akaze_descriptor_channels: 3       # Number of feature channels (1,2,3)
+akaze_kcontrast_percentile: 0.7
+akaze_use_isotropic_diffusion: no
 
 # Params for HAHOG
 hahog_peak_threshold: 0.00001
 hahog_edge_threshold: 10
+hahog_normalize_to_uchar: no
 
 # Params for general matching
 lowes_ratio: 0.8              # Ratio test for matches
@@ -116,9 +120,12 @@ depthmap_save_debug_files: no         # Save debug files with partial reconstruc
 processes: 1                  # Number of threads to use
 
 # Params for submodel split and merge
+submodel_size: 80                                                   # Average number of images per submodel
+submodel_overlap: 30.0                                              # Radius of the overlapping region between submodels
 submodels_relpath: "submodels"                                      # Relative path to the submodels directory
 submodel_relpath_template: "submodels/submodel_%04d"                # Template to generate the relative path to a submodel directory
 submodel_images_relpath_template: "submodels/submodel_%04d/images"  # Template to generate the relative path to a submodel images directory
+submodel_use_symlinks: yes                                          # Symlink global features and matches to be reused on each submodel
 '''
 
 

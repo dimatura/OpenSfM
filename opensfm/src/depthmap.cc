@@ -649,7 +649,4 @@ class DepthmapMerger {
   float same_depth_threshold_;
 };
 
-
-
 }
-

@@ -458,5 +458,3 @@ class ReconstructionAlignment {
 
   ceres::Solver::Summary last_run_summary_;
 };
-
-

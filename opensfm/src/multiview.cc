@@ -214,4 +214,3 @@ bp::object TriangulateBearingsMidpoint(const bp::list &os_list,
 
 
 }
-
